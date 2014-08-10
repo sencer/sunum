@@ -1,0 +1,35 @@
+<!doctype html>
+html lang="eng"
+  head
+    meta charset="utf-8" 
+    title Sunum
+    meta content="Sunum.rb" name="description"
+    meta content=("Sencer Selcuk") name="author"
+    meta content="yes" name="apple-mobile-web-app-capable" /
+    meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /
+    meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"
+    script src="vendor/js/reveal.min.js"
+    script src="vendor/js/head.min.js"
+    script src="http://localhost:35729/livereload.js?snipver=1"
+    script src="theme/.cache/slider.js"
+    link rel="stylesheet" type="text/css" href="vendor/css/reveal.min.css"
+    link rel="stylesheet" type="text/css" href="theme/.cache/theme.css"
+  body
+    .circle.left
+    .arrow.left
+    .circle.right
+    .arrow.right
+    .header_line
+
+    .reveal
+      .slides == yield
+
+    javascript:
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: Reveal.getQueryHash().theme,
+        transition: Reveal.getQueryHash().transition || 'fade',
+        });
