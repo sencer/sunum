@@ -10,6 +10,7 @@ html lang="eng"
     meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"
     script src="vendor/js/reveal.min.js"
     script src="vendor/js/head.min.js"
+    script src="vendor/js/jquery.min.js"
     script src="http://localhost:35729/livereload.js?snipver=1"
     script src="theme/.cache/slider.js"
     link rel="stylesheet" type="text/css" href="vendor/css/reveal.min.css"
@@ -22,7 +23,8 @@ html lang="eng"
     .header_line
 
     .reveal
-      .slides == yield
+      .slides
+        == yield
 
     javascript:
       Reveal.initialize({
