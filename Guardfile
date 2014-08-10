@@ -111,3 +111,7 @@ guard 'Sunum' do
   watch(%r{slides/.+\.slim})
   watch(%r{theme/.+\.(slim|coffee|scss)})
 end
+
+guard 'livereload' do
+  watch('sunum.html')
+end
