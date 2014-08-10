@@ -25,12 +25,16 @@ module ::Guard
 
     def start
       UI.info "Compiling all the files..."
-      run_on_changes Dir.glob("{theme,slides}/*.{coffee,scss,slim}")
+      run_all
     end
 
     def stop
       UI.info "Cleaning the cache..."
       File.delete(*Dir.glob("{theme,slides}/.cache/*"))
+    end
+
+    def run_all
+      run_on_changes Dir.glob("{theme,slides}/*.{coffee,scss,slim}")
     end
 
     def run_on_changes paths
@@ -41,6 +45,7 @@ module ::Guard
         self.send(ext[1..-1], dir, file)
         UI.info "Compiled #{path}"
       end
+      concat
     end
 
     private
@@ -62,6 +67,40 @@ module ::Guard
     end
 
     def concat
+      File.open("sunum.html", "w") do |f|
+        f.puts <<-eos
+				<!doctype html>
+				<html lang="en">
+				#{IO.read("theme/.cache/theme.html")}
+				<body>
+				  <div class="reveal">
+				    <div class="slides">
+				eos
+        File.readlines("slides/slides.list").each do |line|
+          UI.info line
+          unless line.start_with? "#"
+            f.puts "<section>"
+            f.puts IO.read("slides/.cache/#{line.chomp}.html")
+            f.puts "</section>"
+          end
+        end
+        f.puts <<-eos
+				    </div>
+				  </div>
+				  <script>
+				    Reveal.initialize({
+				      controls: true,
+				      progress: true,
+				      history: true,
+				      center: true,
+				      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				      transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+				    });
+				  </script>
+				</body>
+				</html>
+				eos
+      end
     end
 
   end
