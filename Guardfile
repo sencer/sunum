@@ -14,9 +14,11 @@ module ::Guard
     def initialize options = {}
       Compass.add_configuration(
         {
-          :project_path => '.',
-          :sass_path => 'theme',
-          :css_path => 'theme/.cache'
+          project_path: '.',
+          sass_path: 'theme',
+          css_path: 'theme/.cache',
+          output_style: :compressed,
+          relative_assets: true
         },
         'sunum'
       )
@@ -34,7 +36,8 @@ module ::Guard
     end
 
     def run_all
-      run_on_changes Dir.glob("{theme,slides}/*.{coffee,scss,slim}")
+      run_on_changes Dir.glob("slides/*.slim")
+      run_on_changes Dir.glob("theme/*.{coffee,scss}")
     end
 
     def run_on_changes paths
@@ -51,13 +54,19 @@ module ::Guard
     private
 
     def slim dir, file
+      #TODO that is dirty.
+      return if dir == "theme"
       File.open("#{dir}/.cache/#{file.gsub('.slim', '.html')}", "w") do |f|
         f.puts Slim::Template.new("#{dir}/#{file}", pretty: true).render
       end
     end
 
     def scss dir, file
-      Compass.compiler.compile("#{dir}/#{file}", "#{dir}/.cache/#{file.gsub('.scss', '.css')}")
+      begin
+        Compass.compiler.compile("#{dir}/#{file}", "#{dir}/.cache/#{file.gsub('.scss', '.css')}")
+      rescue
+        UI.info "ERROR in #{dir}/#{file} file!"
+      end
     end
 
     def coffee dir, file
@@ -68,38 +77,20 @@ module ::Guard
 
     def concat
       File.open("sunum.html", "w") do |f|
-        f.puts <<-eos
-				<!doctype html>
-				<html lang="en">
-				#{IO.read("theme/.cache/theme.html")}
-				<body>
-				  <div class="reveal">
-				    <div class="slides">
-				eos
-        File.readlines("slides/slides.list").each do |line|
-          UI.info line
-          unless line.start_with? "#"
-            f.puts "<section>"
-            f.puts IO.read("slides/.cache/#{line.chomp}.html")
-            f.puts "</section>"
+        f.puts(
+          Slim::Template.new("theme/theme.slim", pretty: true).render do
+            text = ""
+            File.readlines("slides/slides.list").each do |line|
+              unless line.start_with? '#'
+                line.chomp!
+                text += "<section data-state='#{line}'>\n"
+                text += IO.read("slides/.cache/#{line}.html")
+                text += "\n</section>"
+              end
+            end
+            text
           end
-        end
-        f.puts <<-eos
-				    </div>
-				  </div>
-				  <script>
-				    Reveal.initialize({
-				      controls: true,
-				      progress: true,
-				      history: true,
-				      center: true,
-				      theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				      transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
-				    });
-				  </script>
-				</body>
-				</html>
-				eos
+        )
       end
     end
 
@@ -109,8 +100,9 @@ end
 
 guard 'Sunum' do
   watch(%r{slides/.+\.slim})
-  watch(%r{theme/.+\.(slim|coffee|scss)})
+  watch(%r{theme/.+\.(coffee|scss|slim)})
 end
+
 
 guard 'livereload' do
   watch('sunum.html')
