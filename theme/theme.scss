@@ -3,15 +3,18 @@ $blueprint-grid-width   : 30px;
 $blueprint-grid-margin  : 10px;
 $font-color             : #404040;
 
-// @import "compass/reset";
-// @import "compass/utilities";
-// @import "blueprint";
+@import "compass/reset";
+@import "compass/utilities";
+@import "blueprint";
 
 $bg: #F7F7F7;
 $bg1: shade($bg, 2);
 $bg2: shade($bg, 2);
 
 $red: #c00000;
+
+$font: #404040;
+$cite: #707070;
 
 body {
   margin: 0;
@@ -23,6 +26,8 @@ body {
     linear-gradient(90deg, $bg2 1px, transparent 1px);
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
+  font-family: "Monaco";
+  font-size: 24px;
 }
 
 $radius: 80px;
@@ -37,7 +42,7 @@ $radius: 80px;
   right: 0;
   top: 10%;
   margin: auto;
-  width: 80%;
+  width: 90%;
   height: 2px;
   position: absolute;
   background-color: $red;
@@ -46,7 +51,7 @@ $radius: 80px;
   width: $radius;
   height: $radius;
   border-radius: $radius/2;
-  background-color: $red;
+  background-color: $font;
   &.right {
     right: -$radius/2;
   }
@@ -70,17 +75,69 @@ $radius: 80px;
   }
 }
 
-section {
-  height: 100%;
-  width: 100%;
+.left, .header_line {
+  display: none;
 }
 
-.reveal section h1 {
-  font-size: 48px;
-  font-family: "Monaco";
-  top: -30px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  margin-bottom: 30px;
+progress {
+  display: none;
+  width: 100%;
+  height: 8px;
+  position: absolute;
+  background-color: $font;
+  &::-webkit-progress-value {
+    background-color: $red;
+  };
+  &::-moz-progress-bar {
+    background-color: $red;
+  }
+}
+
+.reveal .slides section {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  h1, h2, h3 {
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+  };
+  h1 {
+    font-size: 48px;
+    line-height: 1.2em;
+    width: 90%;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    color: $font;
+    top: 0;
+    bottom: 0;
+  };
+  h2 {
+    font-size: 48px;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    color: $red;
+  }
+  h3 {
+    color: $cite;
+    padding: 20px;
+  }
+  .center {
+    width: 100%;
+    text-align: center;
+  }
+  .left {
+    width: 100%;
+    text-align: left;
+  }
+  .right {
+    width: 100%;
+    text-align: right;
+  }
 }

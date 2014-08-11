@@ -5,6 +5,7 @@ require 'slim'
 require 'compass'
 require 'sass/plugin'
 require 'coffee-script'
+require 'yaml'
 
 notification :tmux
 
@@ -57,7 +58,15 @@ module ::Guard
       #TODO that is dirty.
       return if dir == "theme"
       File.open("#{dir}/.cache/#{file.gsub('.slim', '.html')}", "w") do |f|
-        f.puts Slim::Template.new("#{dir}/#{file}", pretty: true).render
+        f.puts(Slim::Template.new(pretty: true) do
+          tmp = IO.read("#{dir}/#{file}")
+          if tmp.start_with? '---'
+            tmp.match /^---\n(.*\n)*---\n((.*\n)+)/
+            $2
+          else
+            tmp
+          end
+        end.render)
       end
     end
 
@@ -83,7 +92,9 @@ module ::Guard
             File.readlines("slides/slides.list").each do |line|
               unless line.start_with? '#'
                 line.chomp!
-                text += "<section data-state='#{line}'>\n"
+                tmp = IO.read("slides/#{line}.slim")
+                tmp.match /^---\n((.*\n)+)---/
+                text += "<section data-state='#{line}' #{$1 ? $1.gsub(/\n/, ' ') : nil}>\n"
                 text += IO.read("slides/.cache/#{line}.html")
                 text += "\n</section>"
               end
