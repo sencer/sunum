@@ -94,7 +94,7 @@ module ::Guard
                 line.chomp!
                 tmp = IO.read("slides/#{line}.slim")
                 tmp.match /^---\n((.*\n)+)---/
-                text += "<section data-state='#{line}' #{$1 ? $1.gsub(/\n/, ' ') : nil}>\n"
+                text += "<section id='#{line}' data-state='#{line}' #{$1 ? $1.gsub(/\n/, ' ') : nil}>\n"
                 text += IO.read("slides/.cache/#{line}.html")
                 text += "\n</section>"
               end
