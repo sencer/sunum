@@ -2,7 +2,7 @@ Reveal.initialize
   controls: false
   progress: false
   history: true
-  center: false
+  center: true
   transition: 'slide'
   transitionSpeed: 'slow'
 

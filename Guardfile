@@ -23,6 +23,19 @@ module ::Guard
         },
         'sunum'
       )
+      Slim::Embedded.set_default_options markdown: {
+        fenced_code_blocks: true,
+        no_intra_emphasis: true,
+        autolink: true,
+        strikethrough: true,
+        lax_html_blocks: true,
+        superscript: true,
+        underline: true,
+        highlight: true,
+        footnotes: true,
+        tables: true,
+        smartypants: true,
+      }
       super
     end
 

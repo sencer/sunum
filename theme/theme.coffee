@@ -15,6 +15,8 @@ $ ->
     else
       $(".left").show()
       $(".right").show()
+      sld = $ Reveal.getCurrentSlide()
+      sld.append('<div class="header_line"></div>') unless sld.children('.header_line').length
       $(".header_line").show()
       $(".circle").css "background-color", "#c00000"
       $("progress").show()
