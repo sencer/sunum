@@ -60,18 +60,18 @@ $small:16px;
 .normal { font-size: $normal; }
 .small { font-size: $small; }
 
-.col-24 { @include column(24) };
-.col-20 { @include column(20) };
-.col-16 { @include column(16) };
-.col-12 { @include column(12) };
-.col-4  { @include column(10) };
-.col-8  { @include column(8) };
-.col-6  { @include column(6) };
-.col-4  { @include column(5) };
-.col-4  { @include column(4) };
-.col-3  { @include column(3) };
-.col-2  { @include column(2) };
-.col-1  { @include column(1) };
+.col-24 { @include column(24); min-height: 1px; };
+.col-20 { @include column(20); min-height: 1px; };
+.col-16 { @include column(16); min-height: 1px; };
+.col-12 { @include column(12); min-height: 1px; };
+.col-10 { @include column(10); min-height: 1px; };
+.col-8  { @include column(8); min-height: 1px; };
+.col-6  { @include column(6); min-height: 1px; };
+.col-5  { @include column(5); min-height: 1px; };
+.col-4  { @include column(4); min-height: 1px; };
+.col-3  { @include column(3); min-height: 1px; };
+.col-2  { @include column(2); min-height: 1px; };
+.col-1  { @include column(1); min-height: 1px; };
 
 .full    { width: 100% !important; }
 .left    { text-align: left !important; }
