@@ -17,7 +17,6 @@ html lang="eng"
     .arrow.left
     .circle.right
     .arrow.right
-    /* .header_line */
 
     .reveal
       .slides
@@ -28,5 +27,30 @@ html lang="eng"
     script src="vendor/js/reveal.min.js"
     script src="vendor/js/head.min.js"
     script src="vendor/js/jquery.min.js"
+    script src="vendor/js/sysend.min.js"
     script src="theme/.cache/init.js"
     script src="theme/.cache/theme.js"
+    - if page == 'index'
+      coffee:
+        Reveal.initialize
+          controls: false
+          progress: false
+          history: true
+          center: true
+          transition: 'slide'
+          transitionSpeed: 'slow'
+        Reveal.addEventListener "slidechanged", ->
+          sysend.broadcast 'slide-change', Reveal.getIndices() 
+    - else
+      coffee:
+        Reveal.initialize
+          controls: false
+          progress: false
+          history: true
+          center: true
+          transition: 'none'
+          transitionSpeed: 'slow'
+        window.onload = ->
+          sysend.on 'slide-change', (m) ->
+            Reveal.slide m.h, m.v
+        Reveal.configure {transition: none}
