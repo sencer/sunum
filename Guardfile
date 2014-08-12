@@ -10,7 +10,7 @@ require 'yaml'
 notification :tmux
 
 module ::Guard
-  class Sunum < ::Guard::Plugin
+  class Compile < ::Guard::Plugin
 
     def initialize options = {}
       Compass.add_configuration(
@@ -40,13 +40,13 @@ module ::Guard
     end
 
     def start
+      UI.info "Cleaning the cache..."
+      File.delete(*Dir.glob("{theme,slides}/.cache/*"))
       UI.info "Compiling all the files..."
       run_all
     end
 
     def stop
-      UI.info "Cleaning the cache..."
-      File.delete(*Dir.glob("{theme,slides}/.cache/*"))
     end
 
     def run_all
@@ -98,23 +98,26 @@ module ::Guard
     end
 
     def concat
-      File.open("sunum.html", "w") do |f|
-        f.puts(
-          Slim::Template.new("theme/theme.slim", pretty: true).render do
-            text = ""
-            File.readlines("slides/slides.list").each do |line|
-              unless line.start_with? '#'
-                line.chomp!
-                tmp = IO.read("slides/#{line}.slim")
-                tmp.match /^---\n((.*\n)+)---/
-                text += "<section id='#{line}' data-state='#{line}' #{$1 ? $1.gsub(/\n/, ' ') : nil}>\n"
-                text += IO.read("slides/.cache/#{line}.html")
-                text += "\n</section>"
+      theme = Slim::Template.new("theme/theme.slim", pretty: true)
+      %w[index notlar].each do |page|
+        File.open("#{page}.html", "w") do |f|
+          f.puts(
+            theme.render(nil, page: page) do
+              text = ""
+              File.readlines("slides/slides.list").each do |line|
+                unless line.start_with? '#'
+                  line.chomp!
+                  tmp = IO.read("slides/#{line}.slim")
+                  tmp.match /^---\n((.*\n)+)---/
+                  text += "<section id='#{line}' data-state='#{line}' #{$1 ? $1.gsub(/\n/, ' ') : nil}>\n"
+                  text += IO.read("slides/.cache/#{line}.html")
+                  text += "\n</section>"
+                end
               end
+              text
             end
-            text
-          end
-        )
+          )
+        end
       end
     end
 
@@ -122,12 +125,12 @@ module ::Guard
 end
 
 
-guard 'Sunum' do
+guard 'Compile' do
   watch(%r{slides/.+\.slim})
   watch(%r{theme/.+\.(coffee|scss|slim)})
 end
 
-
 guard 'livereload' do
-  watch('sunum.html')
+  watch('index.html')
+  watch('notlar.html')
 end
