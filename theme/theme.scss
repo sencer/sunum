@@ -23,10 +23,10 @@ $black: #404040;
 .orange { color: $orange; }
 .black { color: $black; }
 
-$redl: lighten($red, 10%);
-$greenl: lighten($green, 10%);
-$bluel: lighten($blue, 10%);
-$orangel: lighten($orange, 10%);
+$redl: lighten($red, 20%);
+$greenl: lighten($green, 20%);
+$bluel: lighten($blue, 20%);
+$orangel: lighten($orange, 20%);
 $blackl: lighten($black, 20%);
 
 .redl { color: $red; }
@@ -35,11 +35,11 @@ $blackl: lighten($black, 20%);
 .orangel { color: $orange; }
 .blackl { color: $black; }
 
-$redd: darken($red, 10%);
-$greend: darken($green, 10%);
-$blued: darken($blue, 10%);
-$oranged: darken($orange, 10%);
-$blackd: darken($black, 10%);
+$redd: darken($red, 20%);
+$greend: darken($green, 20%);
+$blued: darken($blue, 20%);
+$oranged: darken($orange, 20%);
+$blackd: darken($black, 20%);
 
 .redd { color: $red; }
 .greend { color: $green; }
@@ -48,10 +48,10 @@ $blackd: darken($black, 10%);
 .blackd { color: $black; }
 
 
-$huge:72px;
+$huge:64px;
 $large:48px;
-$medium:32px;
-$normal:24px;
+$medium:36px;
+$normal:28px;
 $small:20px;
 
 .huge   { font-size:   $huge; }
@@ -61,11 +61,23 @@ $small:20px;
 .small  { font-size:  $small; }
 
 .col-24 { @include column(24); min-height: 5px; };
+.col-23 { @include column(23); min-height: 5px; };
+.col-22 { @include column(22); min-height: 5px; };
+.col-21 { @include column(21); min-height: 5px; };
 .col-20 { @include column(20); min-height: 5px; };
+.col-19 { @include column(19); min-height: 5px; };
+.col-18 { @include column(18); min-height: 5px; };
+.col-17 { @include column(17); min-height: 5px; };
 .col-16 { @include column(16); min-height: 5px; };
+.col-15 { @include column(15); min-height: 5px; };
+.col-14 { @include column(14); min-height: 5px; };
+.col-13 { @include column(13); min-height: 5px; };
 .col-12 { @include column(12); min-height: 5px; };
+.col-11 { @include column(11); min-height: 5px; };
 .col-10 { @include column(10); min-height: 5px; };
+.col-9  { @include column(9);  min-height: 5px; };
 .col-8  { @include column(8);  min-height: 5px; };
+.col-7  { @include column(7);  min-height: 5px; };
 .col-6  { @include column(6);  min-height: 5px; };
 .col-5  { @include column(5);  min-height: 5px; };
 .col-4  { @include column(4);  min-height: 5px; };
@@ -78,6 +90,7 @@ $small:20px;
 .center  { text-align: center !important; }
 .right   { text-align: right !important; }
 .justify { text-align: justify !important; }
+.vertical{ writing-mode: tb-rl; }
 .pleft   { position: fixed; left: 0; }
 .pright  { position: fixed; right: 0; }
 .pcenter { position: fixed; left: 0; right: 0; margin: auto; }
@@ -170,7 +183,7 @@ progress {
     line-height: 1.4em;
   };
   h1 {
-    font-size: $large;
+    font-size: $huge;
     width: 90%;
     padding-top: 100px;
     padding-bottom: 100px;
@@ -183,7 +196,7 @@ progress {
     width: 100%;
     margin: auto;
     margin-top: 2%;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
     color: $red;
   }
   .header_line {
@@ -202,6 +215,7 @@ progress {
   }
   p {
     text-align: left;
+    line-height: 1.6em;
   }
   a[rel="footnote"] {
     color: $blackl;
