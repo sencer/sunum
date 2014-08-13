@@ -1,5 +1,5 @@
 $blueprint-grid-columns : 24;
-$blueprint-grid-width   : 50px;
+$blueprint-grid-width   : 66px;
 $blueprint-grid-margin  : 0px;
 $black-color            : #404040;
 
@@ -52,26 +52,26 @@ $huge:72px;
 $large:48px;
 $medium:32px;
 $normal:24px;
-$small:16px;
+$small:20px;
 
-.huge { font-size: $huge; }
-.large { font-size: $large; }
+.huge   { font-size:   $huge; }
+.large  { font-size:  $large; }
 .medium { font-size: $medium; }
 .normal { font-size: $normal; }
-.small { font-size: $small; }
+.small  { font-size:  $small; }
 
-.col-24 { @include column(24); min-height: 1px; };
-.col-20 { @include column(20); min-height: 1px; };
-.col-16 { @include column(16); min-height: 1px; };
-.col-12 { @include column(12); min-height: 1px; };
-.col-10 { @include column(10); min-height: 1px; };
-.col-8  { @include column(8); min-height: 1px; };
-.col-6  { @include column(6); min-height: 1px; };
-.col-5  { @include column(5); min-height: 1px; };
-.col-4  { @include column(4); min-height: 1px; };
-.col-3  { @include column(3); min-height: 1px; };
-.col-2  { @include column(2); min-height: 1px; };
-.col-1  { @include column(1); min-height: 1px; };
+.col-24 { @include column(24); min-height: 5px; };
+.col-20 { @include column(20); min-height: 5px; };
+.col-16 { @include column(16); min-height: 5px; };
+.col-12 { @include column(12); min-height: 5px; };
+.col-10 { @include column(10); min-height: 5px; };
+.col-8  { @include column(8);  min-height: 5px; };
+.col-6  { @include column(6);  min-height: 5px; };
+.col-5  { @include column(5);  min-height: 5px; };
+.col-4  { @include column(4);  min-height: 5px; };
+.col-3  { @include column(3);  min-height: 5px; };
+.col-2  { @include column(2);  min-height: 5px; };
+.col-1  { @include column(1);  min-height: 5px; };
 
 .full    { width: 100% !important; }
 .left    { text-align: left !important; }
@@ -92,9 +92,6 @@ body {
     linear-gradient(90deg, $bg2 1px, transparent 1px);
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
-  font-family: "Monaco";
-  font-size: $normal;
-  color: $black;
 }
 
 $radius: 80px;
@@ -161,14 +158,19 @@ progress {
   height: 100%;
   width: 100%;
   padding: 0;
+  font-family: "Monaco";
+  font-size: $normal;
+  line-height: 1.4em;
+  color: $black;
+  counter-reset: list;
   h1, h2, h3 {
     left: 0;
     right: 0;
     margin: auto;
+    line-height: 1.4em;
   };
   h1 {
     font-size: $large;
-    line-height: 1.2em;
     width: 90%;
     padding-top: 100px;
     padding-bottom: 100px;
@@ -200,7 +202,6 @@ progress {
   }
   p {
     text-align: left;
-    line-height: 1.4em;
   }
   a[rel="footnote"] {
     color: $blackl;
@@ -208,18 +209,44 @@ progress {
   }
   .footnotes {
     position: fixed;
-    bottom: -5%;
+    bottom: 1%;
+    left: 0;
     margin: auto;
     text-align: left;
     color: $blackl;
+    font-size: $small;
     ol li {
+      list-style: none;
       float: left;
       a { display: none; }
       &:not(:first-child){ margin-left: 20px; }
+      counter-increment: list;
+    }
+    ol > li:before {
+        content: "(" counter(list, decimal) ") ";
     }
   }
   table {
     display: inline-table;
+    line-height: 2em;
+    border: 2px solid $red;
+    td, th {
+      text-align: center;
+      vertical-align: middle;
+      padding: 7.5px;
+      margin: 0;
+    }
+    td[rowspan]{
+      border-top: 2px solid transparentize($redl, 0.9);
+    }
+    thead tr {
+      background: $red;
+      color: $bg;
+      border-bottom: double black black;
+    }
+    tr:nth-child(even)  {
+      background: transparentize($redl, 0.9);
+    }
   }
   cite {
     color: $blackl;
