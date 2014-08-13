@@ -224,6 +224,8 @@ progress {
     }
     ol > li:before {
         content: "(" counter(list, decimal) ") ";
+        // font-size: 70%;
+        // vertical-align: super;
     }
   }
   table {
