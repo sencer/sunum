@@ -28,3 +28,11 @@ $ ->
 
   Reveal.addEventListener 'slidechanged', (e)->
     theme e.indexh
+
+  Reveal.addEventListener 'fragmentshown', (e) ->
+    if el = e.fragment.getAttribute('data-play')
+      document.getElementById(el).play()
+
+  Reveal.addEventListener 'fragmenthidden', (e) ->
+    if el = e.fragment.getAttribute('data-play')
+      document.getElementById(el).pause()
