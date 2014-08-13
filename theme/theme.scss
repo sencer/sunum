@@ -176,7 +176,7 @@ progress {
   line-height: 1.4em;
   color: $black;
   counter-reset: list;
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     left: 0;
     right: 0;
     margin: auto;
@@ -199,6 +199,18 @@ progress {
     margin-bottom: 2%;
     color: $red;
   }
+  h3 {
+    font-size: $medium;
+    color: $blackl;
+    padding: 20px;
+  }
+  h4 {
+    font-size: $normal;
+    color: $blackd;
+    &:before {
+      content: "» ";
+    }
+  }
   .header_line {
     left: 0;
     right: 0;
@@ -209,10 +221,6 @@ progress {
     position: absolute;
     background-color: $red;
   }
-  h3 {
-    color: $blackl;
-    padding: 20px;
-  }
   p {
     text-align: left;
     line-height: 1.6em;
@@ -220,6 +228,10 @@ progress {
   a[rel="footnote"] {
     color: $blackl;
     text-decoration: none;
+  }
+  ul, ol {
+    line-height: 1.6em;
+    padding: 1em;
   }
   .footnotes {
     position: fixed;
